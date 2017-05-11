@@ -1,0 +1,99 @@
+Programación con restricciones - práctica 3
+
+#Nombre1: Carlos Lozano
+#Nombre2: David Pacios
+#Nombre3:
+
+#Observaciones:
+
+#P1 :
+var int: n=5;
+var int: d=7;
+var int: MaxH=8;
+
+array[1..n,1..d] var 0..MaxH:t;
+
+
+#P2 :
+
+array[1..n] var 0..MaxH*d: horasPersona;
+
+
+
+#P3 :
+
+
+constraint forall (i in 1..n) (horasPersona[i] = sum(j in 1..d)(t[i,j]));
+
+
+#P4 :
+
+array[1..d] of var 0..MaxH*n:horasDia;
+
+#P5 :
+
+constraint forall (i in 1..d) (horasDia[i] = sum(j in 1..n)(t[j,i]));
+
+#P6 :
+
+
+constraint forall (i in 1..n) (exists (j in 1..d) (t[i,j]=0));
+
+#P7 :
+
+
+constraint forall (i in 1..n) (horasPersona[i]>=MaxH*(d-3));
+
+
+#P8 :
+
+
+constraint forall (i in 1..n) (forall (j in 1..d-1) (t[i,j] < MaxH \/ (t[i,j]=MaxH /\ t[i,j+1]<MaxH)));
+
+
+#P9 :
+
+
+int: n=5;
+int: d=7;
+int: MaxH=8;
+
+
+array[1..n,1..d] of var 0..MaxH: t;
+array[1..n] of var 0..MaxH*d: horasPersona;
+array[1..d] of var 0..MaxH*n:horasDia;
+
+
+constraint forall (i in 1..n) (horasPersona[i] = sum(j in 1..d)(t[i,j]));
+constraint forall (i in 1..d) (horasDia[i] = sum(j in 1..n)(t[j,i]));
+constraint forall (i in 1..n) (exists (j in 1..d) (t[i,j]=0));
+constraint forall (i in 1..n) (horasPersona[i]>=MaxH*(d-3));
+constraint forall (i in 1..n) (forall (j in 1..d-1) (t[i,j] < MaxH \/ (t[i,j]=MaxH /\ t[i,j+1]<MaxH)));
+constraint sum(t)>=225;
+
+solve satisfy;
+
+
+#P10 :
+
+int: n=5;
+int: d=7;
+int: MaxH=8;
+var 1..d: aux;
+
+array[1..n,1..d] of var 0..MaxH: t;
+array[1..n] of var 0..MaxH*d: horasPersona;
+array[1..d] of var 0..MaxH*n:horasDia;
+
+
+constraint forall (i in 1..n) (horasPersona[i] = sum(j in 1..aux)(t[i,j]));
+constraint forall (i in 1..aux) (horasDia[i] = sum(j in 1..n)(t[j,i]));
+constraint forall (i in 1..n) (exists (j in 1..aux) (t[i,j]=0));
+constraint forall (i in 1..n) (horasPersona[i]>=MaxH*(d-3));
+constraint forall (i in 1..n) (forall (j in 1..aux-1) (t[i,j] < MaxH \/ (t[i,j]=MaxH /\ t[i,j+1]<MaxH)));
+constraint sum(t)>=225;
+
+solve minimize(aux);
+
+
+

@@ -1,0 +1,60 @@
+Programación con restricciones - práctica 8
+
+#Nombre1: Carlos Lozano Casado
+#Nombre2: David Pacios Izquierdo
+#Nombre3:
+
+#Observaciones:
+
+#P1 :
+
+include "alldifferent.mzn";
+int :n =4;
+int :magico =(n*((n*n) +1)) div 2;
+
+array [1..n,1..n] of var 0..999: cuadrado;
+array [1..n*n] of var 0..999: aux;
+
+constraint forall (i in 1..n) (sum (j in 1..n) (cuadrado[i,j])= magico);
+constraint forall (j in 1..n) (sum (i in 1..n) (cuadrado[i,j])= magico);
+constraint sum (i in 1..n) (cuadrado[i,i])= magico;
+constraint sum (i in 1..n) (cuadrado[i,n-i+1])= magico;
+
+
+
+constraint aux = array1d(cuadrado);
+constraint alldifferent(aux);
+
+solve satisfy;
+
+
+output [show_int(3,cuadrado[i,j])++ "  "++ if j==n then "\n" else "" endif |i in index_set_1of2(cuadrado),j in index_set_2of2(cuadrado)]
+
+#P2 :
+
+include "alldifferent.mzn";
+int :n =3;
+var int :magico;
+
+
+array [1..n,1..n] of var 1..999: cuadrado;
+array [1..n*n] of var 1..999: aux;
+
+
+constraint forall (i in 1..n) (product (j in 1..n) (cuadrado[i,j])= magico);
+constraint forall (j in 1..n) (product (i in 1..n) (cuadrado[i,j])= magico);
+constraint product (i in 1..n) (cuadrado[i,i])= magico;
+constraint product (i in 1..n) (cuadrado[i,n-i+1])= magico;
+
+constraint aux = array1d(cuadrado);
+constraint alldifferent(aux);
+
+
+solve satisfy;
+
+
+output [show_int(3,cuadrado[i,j])++ "  "++ if j==n then "\n" else "" endif |i in index_set_1of2(cuadrado),j in index_set_2of2(cuadrado)]
+
+
+
+

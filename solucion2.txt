@@ -1,0 +1,153 @@
+Programación con restricciones - práctica 2
+
+#Nombre1: Carlos Lozano
+#Nombre2: David Pacios
+#Nombre3:
+
+#Observaciones:
+
+#P1 :
+
+var int: x;
+var int: y;
+var int: r;
+
+constraint (r=2 /\ x>=5) \/ (r=1 /\ (x>5 /\ x<2*y)) \/ (r=0 /\ not(x>5 /\ x<2*y)); 
+
+
+solve satisfy;
+
+
+x = 54;
+y = 227;
+r = 2;
+----------
+x = 55;
+y = 227;
+r = 2;
+----------
+x = 56;
+y = 227;
+r = 2;
+
+#P2 :
+
+var int: x;
+var int: r;
+var int: y;
+
+
+
+constraint y = x-5;
+constraint (x>=10 /\ r=0) \/ (x< 10 /\ (r=2 /\ x>=5) \/ (r=10 /\ (x>5 /\ x<2*y)) \/ (r=0 /\ not(x>5 /\ x<2*y)));
+
+solve satisfy;
+
+%es imposible que g devuelva 10, por que x tendria que ser otra condición. No puede ser (IF (X<2*Y) R = 1; porque no entra nunca no hay numeros X tal que restando  5 y multiplicando por 2 sea mayor para entrar en la condición.
+
+#P3 :
+
+var -2..2: x;
+var -2..2: z;
+var -2..2: y;
+var -2..2: m;
+
+
+constraint (x<y /\ y<z /\ m=z) \/ (x<y /\ y>=z /\ m=y) \/ (x>=y /\ x<z /\ m=z) \/ (x>=y /\ x>=z /\ m=x);
+
+solve satisfy;
+
+
+
+x = -1;
+z = 1;
+y = 1;
+m = 1;
+----------
+x = 0;
+z = 1;
+y = 1;
+m = 1;
+----------
+x = 1;
+z = 1;
+y = 1;
+m = 1;
+----------
+
+
+#P4 : Instatisfactible, m no puede ser ninguno de los tres valores(x,y,z).
+
+#P5 :
+var -2..2: x;
+var -2..2: z;
+var -2..2: y;
+var -2..2: m;
+
+var -1000..1000: u;
+var -1000..1000: a;
+var -1000..1000: b;
+
+constraint (a > 0 /\ x=a /\ y=b /\  z =100) \/ (a <= 0 /\ x=a*a /\ y=b /\  z =b*b) ;
+
+
+constraint (x<y /\ y<z /\ m=z) \/ (x<y /\ y>=z /\ m=y) \/ (x>=y /\ x<z /\ m=z) \/ (x>=y /\ x>=z /\ m=x);
+
+constraint (a> 0 /\ u = m) \/ (a <= 0 /\u = m + 1);
+
+
+solve satisfy;
+
+%6 SOLUCIONES
+
+x = 0;
+z = 1;
+y = -1;
+m = 1;
+u = 2;
+a = 0;
+b = -1;
+----------
+x = 0;
+z = 0;
+y = 0;
+m = 0;
+u = 1;
+a = 0;
+b = 0;
+----------
+x = 0;
+z = 1;
+y = 1;
+m = 1;
+u = 2;
+a = 0;
+b = 1;
+----------
+x = 1;
+z = 1;
+y = -1;
+m = 1;
+u = 2;
+a = -1;
+b = -1;
+----------
+x = 1;
+z = 0;
+y = 0;
+m = 1;
+u = 2;
+a = -1;
+b = 0;
+----------
+x = 1;
+z = 1;
+y = 1;
+m = 1;
+u = 2;
+a = -1;
+b = 1;
+----------
+
+
+

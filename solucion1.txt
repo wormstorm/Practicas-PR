@@ -1,0 +1,93 @@
+Programación con restricciones - práctica 1
+
+#Nombre1: Carlos Lozano Casado
+#Nombre2: David Pacios Izquierdo
+#Nombre3:
+
+#Observaciones:
+
+#P1 Modelo:
+
+
+var bool: a; var bool: b; var bool: c; var bool: d; var bool: e; var bool: f; var bool: g;
+var bool: h;
+
+
+constraint a!= b /\ a!= e /\ a!=d;
+constraint b!= c /\ b!= f;
+constraint c!= g /\ c!= d;
+constraint d!= h;
+constraint h!= e /\ h!= g;
+constraint e!= f;
+constraint f!= g;
+
+solve satisfy;
+
+
+a = false;
+b = true;
+c = false;
+d = true;
+e = true;
+f = false;
+g = true;
+h = false;
+
+#P2 constraint completa:
+
+
+array [1..10] of var 1..10 :a;
+
+
+constraint forall (i,j in 1..10 where i < j) (a[i] != a[j]);
+constraint (a[3] = a[4]+1 /\ a[4]= a[5]+1);
+constraint a[10] =1;
+constraint a[6] !=10;
+constraint a[7] > a[6] /\ a[7]>a[5] /\ a[7]>a[8];
+constraint not(a[8]=a[9]+1 \/ a[8]=a[9]-1);
+
+
+solve satisfy;
+
+
+a = array1d(1..10 ,[10, 9, 7, 6, 5, 3, 8, 2, 4, 1]);
+
+
+#P3.1 ¿Hay soluciones?(S/N): N
+#P3.2 Explicación (una frase): por que a[5]=11 y los valores son de 1..10.
+
+
+#P4 Modelo:
+
+int: n=5;
+
+
+array [1..n] of int : c = [4,6,8,9,1];
+
+
+array [1..n] of var int : d;
+
+var 0..n-1: k;
+
+constraint forall (i in 1..n) ( d[i] = c[( (i+k) mod n)+1 ]);
+
+solve satisfy;
+
+
+d = array1d(1..5 ,[6, 8, 9, 1, 4]);
+k = 0;
+----------
+d = array1d(1..5 ,[8, 9, 1, 4, 6]);
+k = 1;
+----------
+d = array1d(1..5 ,[9, 1, 4, 6, 8]);
+k = 2;
+----------
+d = array1d(1..5 ,[1, 4, 6, 8, 9]);
+k = 3;
+----------
+d = array1d(1..5 ,[4, 6, 8, 9, 1]);
+k = 4;
+----------
+
+
